@@ -17,7 +17,13 @@
     </div>
 
     <div class="resultParas">
+        <p class="userChoiceText"></p>
+        <p class="computerChoiceText"></p>
         <p class="result"></p>
+        <p class="wins"></p>
+        <p class="losses"></p>
+        
+
     </div>
 
     <script>
@@ -26,7 +32,17 @@
         let result = document.querySelector('.result');
         let userInput = document.querySelector('.userInput')
         let submitInput = document.querySelector('.submitInput');
-        
+        let wins = document.querySelector('.wins');
+        let losses = document.querySelector('.losses');
+        let userChoiceText = document.querySelector('.userChoiceText');
+        let computerChoiceText = document.querySelector('.computerChoiceText');
+
+        let W = 0;
+        let L = 0;
+
+        wins.textContent = 'Wins: 0';
+        losses.textContent = 'Losses: 0';
+
         function computerSelector() {
             computerChoice = choices[Math.floor(Math.random() * choices.length)];
         }
@@ -35,38 +51,62 @@
             let playerChoice = String(userInput.value);
             computerSelector();
 
+            function choiceText() {
+                userChoiceText.textContent = 'You Chose: ' + playerChoice;
+                computerChoiceText.textContent = 'The Computer Chose: ' + computerChoice;
+                
+                    
+            }
+
             if (computerChoice.toLowerCase() === 'rock' && playerChoice.toLowerCase() === 'scissors') 
                 {
-                    result.textContent = 'You Lose! Rock beats Paper!';
+                    choiceText();
+                    result.textContent = 'You Lose! Rock beats Scissors!';
+                    L++;
                 }
             else if (computerChoice.toLowerCase() === 'paper' && playerChoice.toLowerCase() === 'rock')
                 {
+                    choiceText();
                     result.textContent ='You Lose! Paper beats Rock';
+                    L++;
                 }
             else if (computerChoice.toLowerCase() === 'scissors' && playerChoice.toLowerCase() === 'paper')
                 {
+                    choiceText();
                     result.textContent = 'You Lose! Scissors beats Paper!';
+                    L++;
                 }
             else if (computerChoice.toLowerCase() === 'scissors' && playerChoice.toLowerCase() === 'rock')
                 {
+                    choiceText();
                     result.textContent = 'You Win! Rock beats Scissors!';
+                    W++;
                 }
             else if (computerChoice.toLowerCase() === 'paper' && playerChoice.toLowerCase() === 'scissors')
                 {
+                    choiceText();
                     result.textContent = 'You Win! Scissors beats Paper!';
+                    W++;
                 }
             else if (computerChoice.toLowerCase() === 'rock' && playerChoice.toLowerCase() === 'paper')
                 {
+                    choiceText();
                     result.textContent = 'You Win! Paper beats Rock!';
+                    W++;
                 }
             else {
+                choiceText();
                 result.textContent = 'Its a Draw!';
             }
 
             userInput.value = '';
+            wins.textContent = "Wins: " + W;
+            losses.textContent = "Losses: " + L;
         }
 
         function clearText() {
+            userChoiceText.textContent = '';
+            computerChoiceText.textContent = '';
             result.textContent = '';
         }
 
