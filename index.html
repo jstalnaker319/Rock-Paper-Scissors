@@ -32,6 +32,7 @@
     <script>
         let choices = ['Rock', 'Paper', 'Scissors']
         let computerChoice;
+        let game = true;
         let result = document.querySelector('.result');
         let userInput = document.querySelector('.userInput')
         let submitInput = document.querySelector('.submitInput');
@@ -130,6 +131,10 @@
                 submitInput.addEventListener('click', gameEnd);
             }
             
+            if (game === false) {
+                console.log('hi');
+            }
+            
         }
 
         function clearText() {
@@ -165,24 +170,22 @@
         function gameEnd() {
             if (W > L) {
                 victory();
+                return game = false;
             }
             else if (L > W){
                 defeat();
+                return game = false;
                 
             }
             else {
                 return;
             }
         }
-        
+        for (let i=0; i<2; i++){
             submitInput.addEventListener('click', playRound);
 
             userInput.addEventListener('click', clearText);
-
-        
-
-        
-        
+        }
     </script>
     
 </body>
