@@ -10,6 +10,8 @@
 
     <h1>Rock Paper Scissors!</h1>
 
+    <p class="round"></p>
+
     <div class = "form">
         <label for="userInput">Rock, Paper, or Scissors?</label>
         <input type="text" class="userInput">
@@ -22,8 +24,7 @@
         <p class="result"></p>
         <p class="wins"></p>
         <p class="losses"></p>
-        
-
+        <p class="gameEnd"></p>
     </div>
 
     <script>
@@ -36,12 +37,17 @@
         let losses = document.querySelector('.losses');
         let userChoiceText = document.querySelector('.userChoiceText');
         let computerChoiceText = document.querySelector('.computerChoiceText');
+        let roundText = document.querySelector('.round');
+        let endText = document.querySelector('.gameEnd');
+
+        let round = 1;
 
         let W = 0;
         let L = 0;
 
         wins.textContent = 'Wins: 0';
         losses.textContent = 'Losses: 0';
+        roundText.textContent = 'Round: 1';
 
         function computerSelector() {
             computerChoice = choices[Math.floor(Math.random() * choices.length)];
@@ -49,13 +55,15 @@
 
         function playRound() {
             let playerChoice = String(userInput.value);
+
+            round++;
+            roundText.textContent = 'Round: ' + round;
+
             computerSelector();
 
             function choiceText() {
                 userChoiceText.textContent = 'You Chose: ' + playerChoice;
-                computerChoiceText.textContent = 'The Computer Chose: ' + computerChoice;
-                
-                    
+                computerChoiceText.textContent = 'The Computer Chose: ' + computerChoice;   
             }
 
             if (computerChoice.toLowerCase() === 'rock' && playerChoice.toLowerCase() === 'scissors') 
@@ -102,18 +110,44 @@
             userInput.value = '';
             wins.textContent = "Wins: " + W;
             losses.textContent = "Losses: " + L;
+            
+            if (round >= 5) {
+             gameEnd();
+            }
         }
 
         function clearText() {
             userChoiceText.textContent = '';
             computerChoiceText.textContent = '';
             result.textContent = '';
+
         }
 
+        function victory(){
+            console.log('w');
+        }
+
+        function defeat() {
+            console.log('L');
+        }
+
+        function gameEnd() {
+            if (W > L) {
+                victory();
+            }
+            else if (L > W){
+                defeat();
+            }
+            else {
+                return;
+            }
+        }
 
         submitInput.addEventListener('click', playRound);
 
         userInput.addEventListener('click', clearText);
+
+        
         
     </script>
     
