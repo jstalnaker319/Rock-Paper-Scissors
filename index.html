@@ -18,6 +18,7 @@
         <label for="userInput">Rock, Paper, or Scissors?</label>
         <input type="text" class="userInput">
         <input type="submit" value="submit" class="submitInput">
+        <input type="submit" value="reset" class="resetButton">
     </div>
 
     <div class="resultParas">
@@ -42,6 +43,7 @@
         let computerChoiceText = document.querySelector('.computerChoiceText');
         let roundText = document.querySelector('.round');
         let endText = document.querySelector('.gameEnd');
+        let reset = document.querySelector('.resetButton');
 
         let round = 1;
 
@@ -131,10 +133,6 @@
                 submitInput.addEventListener('click', gameEnd);
             }
             
-            if (game === false) {
-                console.log('hi');
-            }
-            
         }
 
         function clearText() {
@@ -152,6 +150,9 @@
         }
 
         function victory(){
+            submitInput.removeEventListener('click', gameEnd);
+            submitInput.removeEventListener('click', playRound);
+            userInput.removeEventListener('click', clearText);
             setTimeout(function(){
                 endText.textContent = ' Congratulations! You beat the Computer!';
                 clearAll();
@@ -160,6 +161,9 @@
         }
 
         function defeat() {
+            submitInput.removeEventListener('click', gameEnd);
+            submitInput.removeEventListener('click', playRound);
+            userInput.removeEventListener('click', clearText);
             setTimeout(function(){
                 endText.textContent = 'Awww, the computer beat you :(';
                 clearAll();
@@ -170,22 +174,36 @@
         function gameEnd() {
             if (W > L) {
                 victory();
-                return game = false;
             }
             else if (L > W){
                 defeat();
-                return game = false;
                 
             }
             else {
                 return;
             }
         }
-        for (let i=0; i<2; i++){
             submitInput.addEventListener('click', playRound);
 
             userInput.addEventListener('click', clearText);
-        }
+
+            reset.addEventListener('click', playAgain);
+
+            function playAgain(){
+                endText.textContent = '';
+                clearAll();
+                W = 0;
+                L = 0;
+                round = 1;
+
+                wins.textContent = 'Wins: 0';
+                losses.textContent = 'Losses: 0';
+                roundText.textContent = 'Round: 1';
+
+                submitInput.addEventListener('click', playRound);
+
+                userInput.addEventListener('click', clearText);
+            }
     </script>
     
 </body>
