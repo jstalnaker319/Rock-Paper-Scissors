@@ -10,6 +10,8 @@
 
     <h1>Rock Paper Scissors!</h1>
 
+    <h3>You have 5 rounds to try and beat the computer. Good luck!</h3>
+
     <p class="round"></p>
 
     <div class = "form">
@@ -49,6 +51,8 @@
         losses.textContent = 'Losses: 0';
         roundText.textContent = 'Round: 1';
 
+
+
         function computerSelector() {
             computerChoice = choices[Math.floor(Math.random() * choices.length)];
         }
@@ -56,14 +60,11 @@
         function playRound() {
             let playerChoice = String(userInput.value);
 
-            round++;
-            roundText.textContent = 'Round: ' + round;
-
-            computerSelector();
+            computerSelector();          
 
             function choiceText() {
-                userChoiceText.textContent = 'You Chose: ' + playerChoice;
-                computerChoiceText.textContent = 'The Computer Chose: ' + computerChoice;   
+                userChoiceText.textContent = 'You Chose: ' + playerChoice.toLowerCase();
+                computerChoiceText.textContent = 'The Computer Chose: ' + computerChoice.toLowerCase();   
             }
 
             if (computerChoice.toLowerCase() === 'rock' && playerChoice.toLowerCase() === 'scissors') 
@@ -71,64 +72,94 @@
                     choiceText();
                     result.textContent = 'You Lose! Rock beats Scissors!';
                     L++;
+                    round++;
                 }
             else if (computerChoice.toLowerCase() === 'paper' && playerChoice.toLowerCase() === 'rock')
                 {
                     choiceText();
                     result.textContent ='You Lose! Paper beats Rock';
                     L++;
+                    round++;
                 }
             else if (computerChoice.toLowerCase() === 'scissors' && playerChoice.toLowerCase() === 'paper')
                 {
                     choiceText();
                     result.textContent = 'You Lose! Scissors beats Paper!';
                     L++;
+                    round++;
                 }
             else if (computerChoice.toLowerCase() === 'scissors' && playerChoice.toLowerCase() === 'rock')
                 {
                     choiceText();
                     result.textContent = 'You Win! Rock beats Scissors!';
                     W++;
+                    round++;
                 }
             else if (computerChoice.toLowerCase() === 'paper' && playerChoice.toLowerCase() === 'scissors')
                 {
                     choiceText();
                     result.textContent = 'You Win! Scissors beats Paper!';
                     W++;
+                    round++;
                 }
             else if (computerChoice.toLowerCase() === 'rock' && playerChoice.toLowerCase() === 'paper')
                 {
                     choiceText();
                     result.textContent = 'You Win! Paper beats Rock!';
                     W++;
+                    round++;
+                }
+            else if (playerChoice.toLowerCase() != 'rock' &&
+                    playerChoice.toLowerCase() != 'paper' &&
+                    playerChoice.toLowerCase() != 'scissors') {
+                        clearText();
+                        alert(playerChoice + ' is not an option.');
                 }
             else {
                 choiceText();
                 result.textContent = 'Its a Draw!';
+                round++;
             }
 
+            
             userInput.value = '';
             wins.textContent = "Wins: " + W;
             losses.textContent = "Losses: " + L;
             
             if (round >= 5) {
-             gameEnd();
+                submitInput.addEventListener('click', gameEnd);
             }
+            
         }
 
         function clearText() {
             userChoiceText.textContent = '';
             computerChoiceText.textContent = '';
             result.textContent = '';
+            roundText.textContent = 'Round: ' + round;
+        }
 
+        function clearAll() {
+            clearText();
+            wins.textContent = '';
+            losses.textContent = '';
+            roundText.textContent = '';
         }
 
         function victory(){
-            console.log('w');
+            setTimeout(function(){
+                endText.textContent = ' Congratulations! You beat the Computer!';
+                clearAll();
+            }, 3000);
+            
         }
 
         function defeat() {
-            console.log('L');
+            setTimeout(function(){
+                endText.textContent = 'Awww, the computer beat you :(';
+                clearAll();
+            }, 3000);
+            
         }
 
         function gameEnd() {
@@ -137,15 +168,18 @@
             }
             else if (L > W){
                 defeat();
+                
             }
             else {
                 return;
             }
         }
+        
+            submitInput.addEventListener('click', playRound);
 
-        submitInput.addEventListener('click', playRound);
+            userInput.addEventListener('click', clearText);
 
-        userInput.addEventListener('click', clearText);
+        
 
         
         
